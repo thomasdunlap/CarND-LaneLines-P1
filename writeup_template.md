@@ -45,10 +45,15 @@ In order to draw a single line on the left and right lanes, I modified the draw_
 If you'd like to include images to show how the pipeline works, here is how to include an image: 
 
 My pipeline has 5 major steps. The first is creating the color_select image, to highlight the white and yellow lines from the original image. We start by copying the original image.
+
 ![original image][original]
+
 The creating thresholds that 
+
 ![color select image][color_select]
+
 Put selection in grayscale to further highlight? for future processing.
+
 ![grayscale color select image][cs_gray]
 
 Next, we identify and highlight the edges of the lines in the image, starting by transforming the original image to grayscale: 
@@ -58,6 +63,7 @@ Then we send a Gaussian smoother with a 9x9 kernal over ther image, to reduce th
 We run our Blur Gray image through Canny Edge detection, which finds the edges based on the gradient of color change or some shit.
 ![canny edges image][edges]
 From there, we run open cv's morph-closed function, where I chose a 5x5 kernal first dialates the edges (adds pixels of similar pixel intensity around edges) and then erodes them.  This is helps us highlight and extend our lane line pieces a bit.
+
 ![morphed edges image][edges_closed]
 Finally for step 2, we merge, or add, or Grayscale Color Select image with this edged image, to give even more emphasis to the lane line edges.
 ![merged image][merged]
