@@ -13,7 +13,7 @@
 The goals / steps of this project are the following:
 * Make a pipeline that finds lane lines on the road
 * Reflect on your work in a written report
-
+* Put extra comments into code to make it easier to understand
 
 [//]: # (Image References)
 
@@ -57,16 +57,48 @@ Put selection in grayscale to further highlight? for future processing.
 ![grayscale color select image][cs_gray]
 
 Next, we identify and highlight the edges of the lines in the image, starting by transforming the original image to grayscale: 
+
 ![grayscale image][gray]
+
 Then we send a Gaussian smoother with a 9x9 kernal over ther image, to reduce the edge noise.
+
 ![blur gray image][blur_gray]
+
 We run our Blur Gray image through Canny Edge detection, which finds the edges based on the gradient of color change or some shit.
+
 ![canny edges image][edges]
+
 From there, we run open cv's morph-closed function, where I chose a 5x5 kernal first dialates the edges (adds pixels of similar pixel intensity around edges) and then erodes them.  This is helps us highlight and extend our lane line pieces a bit.
 
 ![morphed edges image][edges_closed]
+
 Finally for step 2, we merge, or add, or Grayscale Color Select image with this edged image, to give even more emphasis to the lane line edges.
+
 ![merged image][merged]
+
+3. Create region of interest and masked regions.
+
+![masked image][masked]
+
+4. Used Hough Line Transformation on Region of Insterest in masked image
+
+![hough lines image][lines_img]
+
+5. 
+
+Make hough lines grayscale
+
+![grayscale hough lines image][gray_lines]
+
+Use final lane lines function, which takes the average slopes of the lines in an image, finds their slope, and extrapolates the line.
+
+![final lane lines image][final_lines]
+
+
+
+![final weighted lines image][weighted_lines]
+
+
 
 ### 2. Identify potential shortcomings with your current pipeline
 
