@@ -1,6 +1,6 @@
 # **Finding Lane Lines on the Road** 
 
-![alt text][image2]
+![original image][original]
 
 ## Writeup Template
 
@@ -18,7 +18,7 @@ The goals / steps of this project are the following:
 [//]: # (Image References)
 
 [image1]: ./examples/grayscale.jpg "Grayscale"
-[image2]: ./examples/original.jpg "Original Image"
+[original]: ./examples/original.jpg "Original Image"
 
 ---
 
