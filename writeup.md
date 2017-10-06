@@ -2,10 +2,6 @@
 
 ![original image][original] ![final image][weighted_lines]
 
-## Writeup Template
-
-### You can use this file as a template for your writeup if you want to submit it as a markdown file. But feel free to use some other method and submit a pdf if you prefer.
-
 ---
 
 **Finding Lane Lines on the Road**
@@ -44,39 +40,47 @@ In order to draw a single line on the left and right lanes, I modified the draw_
 
 If you'd like to include images to show how the pipeline works, here is how to include an image: 
 
-My pipeline has 5 major steps. The first is creating the color_select image, to highlight the white and yellow lines from the original image. We start by copying the original image.
+My pipeline has 5 major steps, which I've numbered both here and in the code for clarity:
+
+Step 1: Highlight the Lanes Using Color Thresholds
+
+First, we create a copy of our original image:
 
 ![original image][original]
 
-The creating thresholds that 
+Next, we use color thresholds to leave us with just the land line colors in the image: yellow and white. These red, green, and blue thresholds are mirrors of the pixel arrays in the original image, except they hold a boolean value of True or False instead of the pixel intensity.  Whether its true or false will be relative to the conditional statment in the thresholds (i.e., more than 220 for red). Then, for every threshold value that is "False," the equivalent pixel intesity in our copied image will be made equal to 0 (the color black).  Here is our image after thresholding:
 
 ![color select image][color_select]
 
-Put selection in grayscale to further highlight? for future processing.
+Also, here is the grayscale version of our color_select image, which we will need in step two where we further highlight the lane lines:
 
 ![grayscale color select image][cs_gray]
 
-Next, we identify and highlight the edges of the lines in the image, starting by transforming the original image to grayscale: 
+2. Identify and Highlight Edges 
+
+We'll start by transforming the original image to grayscale: 
 
 ![grayscale image][gray]
 
-Then we send a Gaussian smoother with a 9x9 kernal over ther image, to reduce the edge noise.
+Then we send a Gaussian smoother with a 9x9 kernal over ther image to reduce the edge noise. As you can see, this reduces the number of faint edges in our image, which we don't want averaged into our actually lane line data when the time comes:  
 
 ![blur gray image][blur_gray]
 
-We run our Blur Gray image through Canny Edge detection, which finds the edges based on the gradient of color change or some shit.
+We run our blur_gray image through Canny Edge detection, which finds the edges based on the gradient of color change:
 
 ![canny edges image][edges]
 
-From there, we run open cv's morph-closed function, where I chose a 5x5 kernal first dialates the edges (adds pixels of similar pixel intensity around edges) and then erodes them.  This is helps us highlight and extend our lane line pieces a bit.
+From there, we run open cv's Morph-Closed function, where I chose a 5x5 kernal first dialates the edge lines (adds pixels of similar pixel intensity around edges) and then erodes (thins edge lines or deletes them if they aren't above a certain thickness.  This is helps us highlight and extend our lane line pieces:
 
-![morphed edges image][edges_closed]
+![morphed edges image][edges_close]
 
-Finally for step 2, we merge, or add, or Grayscale Color Select image with this edged image, to give even more emphasis to the lane line edges.
+Finally, we merge, or add, or grayscale color select (cs_gray) image with this edges_close image, to give even more emphasis to the lane line edges.  I used cv2.add() because any sumed value over the max of 255 is equal to 255, as opposed to other types of image addition that use modulus addition where, say 255 + 25 = 25. Here's the merged image:
 
 ![merged image][merged]
 
 3. Create region of interest and masked regions.
+
+Our mask will turn everything outside our region of interest to black (pixel intensity of zero).
 
 ![masked image][masked]
 
