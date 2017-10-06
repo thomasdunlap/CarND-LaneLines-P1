@@ -34,6 +34,7 @@ If you'd like to include images to show how the pipeline works, here is how to i
 
 ### 2. Identify potential shortcomings with your current pipeline
 
+There are potential shortcomings to the current pipeline.  The most obvious being this pipeline finds lane lines by averaging the the points directly in front of it.  A poorly painted road, debris, snow, water reflecting sunlight, and possibly even quickly changing angles of a very winding road could all confuse this mechanism.
 
 One potential shortcoming would be what would happen when ... 
 
@@ -41,6 +42,8 @@ Another shortcoming could be ...
 
 
 ### 3. Suggest possible improvements to your pipeline
+
+One obvious improvement would be averaging the lines in segments, instead of one bunch.  This should eleminate how the lane lines stick out into the road on curves, but could also become confusing if the road markings aren't clear or this is unexpected debris as mentioned above.  
 
 A possible improvement would be to ...
 
