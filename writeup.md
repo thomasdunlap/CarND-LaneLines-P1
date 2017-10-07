@@ -26,19 +26,10 @@ The goals / steps of this project are the following:
 [merged]: ./examples/merged.jpg "Merged Image"
 [original]: ./examples/original.jpg "Original Image"
 [weighted_lines]: ./examples/weighted_lines.jpg "Weighted Result Image"
-[video]: ./test_videos_output/challenge.mp4 "Working Lane Lines Video"
 
 ---
 
-### Reflection
-
-### 1. Describe your pipeline. As part of the description, explain how you modified the draw_lines() function.
-
-My pipeline consisted of 5 steps. First, I converted the images to grayscale, then I .... 
-
-In order to draw a single line on the left and right lanes, I modified the draw_lines() function by ...
-
-If you'd like to include images to show how the pipeline works, here is how to include an image: 
+### Data Pipeline
 
 My pipeline has 5 major steps, which I've numbered both here and in the code for clarity:
 
@@ -104,26 +95,25 @@ Finally, we do a weighted add of our original image with slightly transparant ov
 
 ![final weighted lines image][weighted_lines]
 
-#### Does This Transfer to Video?
-
-In the words of a great philoserpher, "YOU'RE DARN TOOTIN' IT DOES!!":
-
-![video][video]
 
 
-### 2. Identify potential shortcomings with your current pipeline
+### Potential Shortcomings of Current Pipeline
 
-There are potential shortcomings to the current pipeline.  The most obvious being this pipeline finds lane lines by averaging the the points directly in front of it.  A poorly painted road, debris, snow, water reflecting sunlight, and possibly even quickly changing angles of a very winding road could all confuse this mechanism.
+There are a few potential shortcomings with my current pipeline.  The most obvious being that the final lane lines are found with an averaged best fit line it. A dirt road, poorly painted lines, or debris could all throw off the lane lines.  You can see the beginnings of that alread in the wobble of the extrapolated lines over a dotted lane line.   
 
-One potential shortcoming would be what would happen when ... 
+Similiarly, color could confuse it. Snow, puddles reflecting sunlight, or even the wrong color car directly in front. It would get confused by words written in white on the street, like school zone. 
 
-Another shortcoming could be ...
+Also, having an obstructed view, or being on the crest of a hill where the camera was seeing more horrizon than road could be a problem as well.
+
+Finally, if someone were to put the camera at a different angle, or there was low contrast, it would be unlikely to reproduce these results.
 
 
-### 3. Suggest possible improvements to your pipeline
 
-One obvious improvement would be averaging the lines in segments, instead of one bunch.  This should eleminate how the lane lines stick out into the road on curves, but could also become confusing if the road markings aren't clear or this is unexpected debris as mentioned above.  
+### Possible Improvements
 
-A possible improvement would be to ...
+One improvement would be extrapolating the lines into small, connected segments, instead of one long line.  This should eliminate how the lane lines stick out into the road on curves, but could also become confusing if the road markings aren't clear or there is unexpected debris as mentioned above.  
 
-Another potential improvement could be to ...
+Another improvement would involve being able to identify the edges of the road, cars, objects that are not lines using object identification.
+
+A third improvement would be having different programs for different weather.  In the snow you can't see lane lines, but you can often make out tire tracks and you can approximate where the road is relative to what's its sides.
+
