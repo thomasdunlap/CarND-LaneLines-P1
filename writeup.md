@@ -26,7 +26,7 @@ The goals / steps of this project are the following:
 [merged]: ./examples/merged.jpg "Merged Image"
 [original]: ./examples/original.jpg "Original Image"
 [weighted_lines]: ./examples/weighted_lines.jpg "Weighted Result Image"
-
+[video]: ./test_videos_output/challenge.mp4 "Working Lane Lines Video"
 
 ---
 
@@ -42,7 +42,7 @@ If you'd like to include images to show how the pipeline works, here is how to i
 
 My pipeline has 5 major steps, which I've numbered both here and in the code for clarity:
 
-Step 1: Highlight the Lanes Using Color Thresholds
+#### Step 1: Highlight the Lanes Using Color Thresholds
 
 First, we create a copy of our original image:
 
@@ -56,7 +56,7 @@ Also, here is the grayscale version of our color_select image, which we will nee
 
 ![grayscale color select image][cs_gray]
 
-2. Identify and Highlight Edges 
+#### 2. Identify and Highlight Edges 
 
 We'll start by transforming the original image to grayscale: 
 
@@ -78,30 +78,37 @@ Finally, we merge, or add, or grayscale color select (cs_gray) image with this e
 
 ![merged image][merged]
 
-3. Create region of interest and masked regions.
+#### 3. Create region of interest and masked regions.
 
-Our mask will turn everything outside our region of interest to black (pixel intensity of zero).
+Our mask will turn everything outside our region of interest to black (pixel intensity of zero).  Through the very technical process of "trial and error," I eventually defined the points for regions of interest for the left lane, right lane, and both combined:
 
 ![masked image][masked]
 
-4. Used Hough Line Transformation on Region of Insterest in masked image
+#### 4. Used Hough Line Transformation on Region of Interest in Masked Image
+
+Something about gradients and stuff!
 
 ![hough lines image][lines_img]
 
-5. 
+#### 5. Draw Lines and Add Them to Original Image With extrapolate_lines()
 
-Make hough lines grayscale
+Finally, we grayscale our lines_img:
 
 ![grayscale hough lines image][gray_lines]
 
-Use final lane lines function, which takes the average slopes of the lines in an image, finds their slope, and extrapolates the line.
+Next, we use the extrapolate_lines() function, which makes a best fit line across the right and left vertice points, finds their slope, and extrapolates lane lines based on highest and lowest points returned by the calculation:
 
 ![final lane lines image][final_lines]
 
-
+Finally, we do a weighted add of our original image with slightly transparant overlay of our lane line images, and we have our final weighted images!
 
 ![final weighted lines image][weighted_lines]
 
+#### Does This Transfer to Video?
+
+In the words of a great philoserpher, "YOU'RE DARN TOOTIN' IT DOES!!":
+
+![video][video]
 
 
 ### 2. Identify potential shortcomings with your current pipeline
